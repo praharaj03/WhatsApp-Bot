@@ -1,155 +1,100 @@
-<h1 align="center">
-  <br>
-  <a href="https://github.com/fdciabdul/InsideHeartz-WhatsApp-Bot"><img src="https://booth.pximg.net/b745d4a2-a7a0-4826-96e8-55e09ebe32f1/i/1280359/5074b2e0-6e4e-41b0-973e-be0e44bb82cd_base_resized.jpg"></a>
-  <br>
-  Inside Heartz WhatsApp Bot
-  <br>
-</h1>
+<h1 align="center">Inside Heartz AI WhatsApp Bot</h1>
 
-<h3 align=center>A multipurpose whatsapp bot built with <a href="https://github.com/pedroslopez/whatsapp-web.js">whatsapp-web.js</a></h3>
+<h3 align="center">An AI-powered WhatsApp chatbot built with <a href="https://github.com/wwebjs/whatsapp-web.js">whatsapp-web.js</a> and a live control dashboard</h3>
 
+<div align="center">
 
-<div align=center>
-
-
-  <a href="https://github.com/pedroslopez/whatsapp-web.js">
-    <img src="https://img.shields.io/badge/whatsapp--web.js-V.1.7%205-green?style=flat&logo=npm" alt="shield.png">
-
-  <a href="https://github.com/fdciabdul">
-    <img src="https://img.shields.io/badge/license-GNU%20GPL%20v3-green" alt="shield.png">
-  </a>
+  <img src="https://img.shields.io/badge/whatsapp--web.js-1.34.7-green?style=flat&logo=npm" alt="shield.png">
+  <img src="https://img.shields.io/badge/license-GNU%20GPL%20v3-green" alt="shield.png">
 
 </div>
 
-<p align="center">
-  <a href="#features">Features</a>
-  •
-  <a href="#installation">Installation</a>
-  •
-  <a href="#set-up">Set Up</a>
-  •
-  <a href="#colors">Colors</a>
-  •
-  <a href="#license">License</a>
-  •
-  <a href="#credits">Credits</a>
-</p>
+The bot answers WhatsApp messages with real LLM responses, supports configurable *moods*, per-chat conversation history, token/usage tracking, and a beautiful black liquid-glass monitoring dashboard. (English version of `README.md`.)
 
-### Install
+---
 
-Clone this project
+## Features
 
-```bash
-> git clone https://github.com/fdciabdul/InsideHeartz-WhatsApp-Bot
-> cd InsideHeartz-WhatsApp-Bot
+- 🤖 **AI chat replies** powered by Groq (`llama-3.3-70b-versatile`) out of the box
+  - Also supports OpenAI, Gemini, Anthropic, and local Ollama — switch via `LLM_PROVIDER`
+- 🎭 **Moods** — change the assistant's personality on the fly (`default 😊`, `professional 💼`, `casual 🍃`, `angry 😤`, `romantic ❤️`, `vulgar 🔥`)
+- 🧠 **Per-chat memory** — keeps conversation context per chat (configurable `LLM_HISTORY_LIMIT`)
+- 📊 **Live dashboard** — `http://127.0.0.1:3000` with status, token usage bars, uptime, and a click-to-change mood picker
+- 🔐 **Session persistence** — `LocalAuth` keeps you logged in; no QR scan on every restart
+- ♻️ **Auto-retry & watchdog** — restarts the client if initialization fails or hangs
+- 🔎 **Usage tracking** — check token consumption with `!usage`
 
-```
+## Requirements
 
-Install dependencies:
+- Node.js **18+**
+- Google Chrome (set `CHROME_PATH` in `.env` if it's not in the default location)
+- A Groq API key (free) from https://console.groq.com
+
+## Installation
 
 ```bash
-> npm i
-```
-You have to install ffmpeg and wget 
-
-if you using Windows RDP , you can download this binary
-<a href="https://drive.google.com/file/d/1SugE8vjfOyyW3VTRqsxlW_GJh6EKQ19X/view?usp=drivesdk"> Download </a>
-
-and move folder ffmpeg to `C:\`
-and file wget.exe to `system32`
-
-altho set the env variable for ffmpeg 
-and calling the ffmpeg path with
-```batch
-C:\ffmpeg\bin
-
+git clone https://github.com/praharaj03/WhatsApp-Bot.git
+cd WhatsApp-Bot
+npm install
 ```
 
-if you using linux , don't forget to change the path on 
-ytmp3 feature
-to  `usr/bin/ffmpeg`
-
-and change the chrome path  
-`usr/bin/google-chrome-stable`
-
-### Usage
-1. Running the  bot
+Copy the environment template and add your API key:
 
 ```bash
-> node start.js
+cp .env.example .env
 ```
 
-if the bot was running, you should scan the QR code with the WhatsApp app.
+Edit `.env`:
 
-The live monitoring dashboard is available at `http://127.0.0.1:3000`. Set
-`BOT_DASHBOARD_PORT` to use a different port. The bot uses a current WhatsApp
-Web build automatically; set `WA_WEB_VERSION` only if you need to pin a
-different archived build.
+```env
+GROQ_API_KEY=gsk_your_key_here
+```
 
-### Fitur 
-type !menu for showing the features
+## Usage
 
-<img src="https://github.com/fdciabdul/termux-whatsapp-bot/raw/master/Screenshot_2020_0613_032927.jpg"></img>
+```bash
+npm start
+```
 
- Feature  | Status |
-| ------------- | ------------- |
-| Facebook Download | Oke|
-| Tiktok Downlod | Soon |
-| WhatsAnime | Oke |
-| Youtube Mp3|  Oke|
-| Brainly |  Oke|
-| Wiki|  Oke|
-| Text To Voice|  Oke|
-| Youtube MP4|  Oke|
-| NHentai|  Oke|
-| Horoscope menu|  Oke|
+First run: the terminal prints a **QR code** — scan it from WhatsApp (phone) via **Linked Devices**. After that the session is saved and the bot auto-restarts without scanning.
 
-and many more
+Open the dashboard at **http://127.0.0.1:3000** to watch status, token usage, and switch moods from the browser.
 
-### Bot Whatsapp Command 
+## Commands
 
-## Admin Command
-( Only admin )
+| Command | Description |
+| --- | --- |
+| `!mood` / `!moods` | Show current mood and list all available moods |
+| `!mood <name>` | Change mood, e.g. `!mood romantic` |
+| `!reset` | Clear that chat's conversation history |
+| `!usage` / `!quota` | Show token usage stats |
+| _any other text_ | The AI replies |
 
-- `!promote`: for making a member to admin
-- `!kick`: Kick member
-- `!demote`: Delete statuse admin
-- `!desc`: Change group description
-- `!judul`: Change the group title
+## Environment Variables
 
-## Download Command
+| Variable | Default | Description |
+| --- | --- | --- |
+| `GROQ_API_KEY` | — | Groq API key (required) |
+| `LLM_PROVIDER` | `groq` | `groq`, `openai`, `gemini`, `anthropic`, `ollama` |
+| `LLM_MODEL` | `llama-3.3-70b-versatile` | Model to use for the selected provider |
+| `LLM_MOOD` | `default` | Initial mood |
+| `LLM_HISTORY_LIMIT` | `10` | Messages of context kept per chat |
+| `LLM_TEMPERATURE` | `0.8` | Creativity of responses |
+| `LLM_MAX_TOKENS` | `1024` | Max completion tokens |
+| `CHROME_PATH` | auto-detected | Path to the Chrome executable |
+| `BOT_DASHBOARD_PORT` | `3000` | Dashboard port |
+| `WA_WEB_VERSION` | current build | Pin a specific WhatsApp Web build |
 
-  - `!ytmp3 [URL] `: Download Youtube and Convert to mp3
-  - `!yt [URL]`: Download Youtube Mp4
-  - `!fb [URL]`: Download Facebook Videos
-  - `!tiktok [URL]`: Download Tiktok Videos
-  - `!igv [URL]`: Download Instagram Videos
-  - `!igp [URL]`: Download Instagram Pictures
-  
+## Project Structure
 
-## Fun Mode Command
-  - `!nama text`: Arti nama
-  - `!sifat [nama] tt mm yy`: Cek sifat mu
-  - `!pasangan text & text `: Cek kecocokan pasangan
-  - `!tts text`: Convert text to voice
-  - `!sial tt-mm-yy `: Cek hari sial
- - `!lirik artist - tittle `: Cek lirik
+```
+start.js      Entry point — loads .env, builds the runtime from index.js, applies fixes
+index.js      WhatsApp client: QR/login, auth watchdog, message handling
+llm.js        LLM client: providers, moods, conversation history, token usage
+monitor.js    Dashboard server + state (black liquid-glass UI)
+config.js     Reads configuration from environment variables
+```
 
-## Educational Command
-  - `!brainly`: Convert text to voice
-  - `!wiki`: cari apapun di wiki
-  - `!tts`: Convert text to voice
+## Disclaimer
 
-
-
-If you want to request some another features you can contact me below  :
-
-Di : <a href="https://wa.me/6289614737919"> WhatsApp</a>
-Di : <a href="https://fb.com/fdciabdul"> Facebook</a>
-
-## Support Me :)
-
-Mohon jangan di jual lagi ya source ini :)
-
-buy me a coffe :P
-<a href="https://saweria.co/donate/fdciabdul"><img width ="100" height="100" src="https://www.pngmart.com/files/7/Donation-Transparent-PNG.png" widht ="350" align="center" height="350"></a>
+This is an unofficial, community bot built with `whatsapp-web.js`. Use responsibly — sending spam or bulk messages can get your WhatsApp account **banned**. The author is not responsible for how you use it.

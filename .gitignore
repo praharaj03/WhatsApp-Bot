@@ -4,3 +4,4 @@ node_modules/
 *.log
 session.json
 .index-runtime.js
+.env
