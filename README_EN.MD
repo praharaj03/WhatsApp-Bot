@@ -76,11 +76,15 @@ and change the chrome path
 1. Running the  bot
 
 ```bash
-> node index.js
+> node start.js
 ```
 
-if the bot was running , you should scan qr code with
-apps
+if the bot was running, you should scan the QR code with the WhatsApp app.
+
+The live monitoring dashboard is available at `http://127.0.0.1:3000`. Set
+`BOT_DASHBOARD_PORT` to use a different port. The bot uses a current WhatsApp
+Web build automatically; set `WA_WEB_VERSION` only if you need to pin a
+different archived build.
 
 ### Fitur 
 type !menu for showing the features
